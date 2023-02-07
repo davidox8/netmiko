@@ -443,11 +443,10 @@ class BaseConnection:
             if disabled_algorithms:
                 self.disabled_algorithms = disabled_algorithms
             else:
-                self.disabled_algorithms = (
-                    {"pubkeys": ["rsa-sha2-256", "rsa-sha2-512"]}
-                    if disable_sha2_fix
-                    else {}
-                )
+                if disable_sha2_fix:
+                    self.disabled_algorithms = {}
+                else:
+                    self.disabled_algorithms = {"pubkeys": ["rsa-sha2-256", "rsa-sha2-512"]}
 
             # For SSH proxy support
             self.ssh_config_file = ssh_config_file
